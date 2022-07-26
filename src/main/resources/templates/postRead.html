@@ -1,0 +1,58 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+<main layout:fragment="content">
+
+    <div class="container">
+        <div class="py-3" style="display: flex; flex-direction: row; justify-content: space-between">
+            <span class="fs-5 text-primary" style="align-self: flex-start ">✍ 글 기록</span>
+            <div>
+                <button onclick="post_update()" id="postUpdateBtn" type="button" class="btn btn-outline-primary">기록수정</button>
+                <button onclick="post_delete()" id="postDeleteBtn" type="button" class="btn btn-outline-primary">기록삭제</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 글 기록 제목 -->
+    <div class="container mb-3 py-2">
+                    <div class="form-floating mb-3 py-2">
+                        <input style="background-color: #FFFFFF" disabled type="text" class="form-control" id="post-title" >
+                        <label for="post-title">제목</label>
+                    </div>
+<!--        <div class="form-control" id="title" style="font-size: 20px ">-->
+<!--        </div>-->
+    </div>
+
+
+    <!-- 기록 내용 넣기 content & image   -->
+    <div class="container">
+
+        <div class="row">
+            <div class="form-floating">
+                    <textarea readonly class="form-control" placeholder="Leave a comment here" id="post-textarea"
+                              style="height:300px;resize: none;background-color:white">
+                    </textarea>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+
+
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        const id = [[${id}]];
+
+    </script>
+
+    <script src="/JS/postRead.js"></script>
+</th:block>
+</body>
+</html>

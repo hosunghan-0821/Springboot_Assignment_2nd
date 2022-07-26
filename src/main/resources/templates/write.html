@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <link rel="stylesheet" href="/CSS/write.css">
+</head>
+<body>
+
+<main layout:fragment="content">
+        <!-- 메인 컨텐츠 상단 헤더 컨테이너          -->
+        <div class="container">
+            <div class="py-3" style="display: flex; flex-direction: row; justify-content: space-between">
+                <span class="fs-5 text-primary" style="align-self: flex-start ">✍ 글 기록하기</span>
+                <div  class="title-right-header" >
+
+                    <div class="writer-info-box">
+                        <input id="post-writer-id" type="text" class="ms-3 form-control" placeholder="작성자 이름" aria-label="Username">
+                        <input id="post-writer-password" type="password" class="ms-3 form-control" placeholder="비밀번호" aria-label="Username">
+                    </div>
+                    <button onclick="posting()" id="postSaveBtn" type="button" class="ms-3 btn btn-outline-primary write-post-btn" >
+                        기록작성
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        <!-- 메인 컨텐츠 내용 작성 및 파일 선택 컨테이너-->
+        <div class="container">
+            <!-- 글 작성 컨테이너    -->
+            <div class="row">
+                <div class="form-floating mb-3 p-2">
+                    <input type="text" class="form-control" id="post-title">
+                    <label for="post-title">제목</label>
+                </div>
+            </div>
+
+            <div class="row content">
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="내용" id="post-contents"
+                              style="height: 300px"></textarea>
+                </div>
+            </div>
+        </div>
+
+</main>
+
+<th:block layout:fragment="script">
+    <script  src="/JS/write.js"></script>
+    <!--수정 글쓰기 일 경우 -->
+    <th:block th:if="${posting!=''}">
+        <script th:inline="javascript">
+            const id = [[${posting.id}]];
+        </script>
+        <script src="/JS/update.js"></script>
+    </th:block>
+    <!--일반 글쓰기 일 경우 -->
+    <script th:unless="${positng==''}">
+        console.log("글 작성")
+    </script>
+</th:block>
+</body>
+</html>

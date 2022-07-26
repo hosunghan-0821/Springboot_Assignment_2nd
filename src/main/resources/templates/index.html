@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragments/layout}">
+<head>
+</head>
+<body>
+
+    <header></header>
+
+    <main layout:fragment="content">
+        <div class="container">
+            <table class="table">
+                <thead>
+                <tr class="table-primary">
+                    <th style="width: 15%" scope="col">작성번호</th>
+                    <th style="width: 50%" scope="col">제목</th>
+                    <th style="width: 10%" scope="col">작성자</th>
+                    <th style="width: 10%" scope="col">작성일자</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="list : ${postingList}">
+                    <th scope="row" th:text="${list.getId()}"></th>
+                    <td><a class="text-primary" style="cursor:pointer" th:text="${list.getTitle()}" th:href="@{/posting/details(id=${list.getId()})}" ></a> </td>
+                    <td th:text="${list.getWriter()}"></td>
+                    <td th:text="${list.getCreatedAt()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer></footer>
+</body>
+</html>
