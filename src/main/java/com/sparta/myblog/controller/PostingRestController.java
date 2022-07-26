@@ -4,7 +4,7 @@ package com.sparta.myblog.controller;
 import com.sparta.myblog.models.Posting;
 import com.sparta.myblog.models.PostingRepository;
 import com.sparta.myblog.models.PostingRequestDto;
-import com.sparta.myblog.models.PostingVo;
+import com.sparta.myblog.models.PostingResponseDto;
 import com.sparta.myblog.service.PostingService;
 import com.sparta.myblog.utils.PostingUtils;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class PostingRestController {
 
     //게시글 전체 조회
     @GetMapping("/api/blogs")
-    public List<PostingVo> readPostings(){
+    public List<PostingResponseDto> readPostings(){
         List<Posting> postings = postingRepository.findAllByOrderByCreatedAtDesc();
 
         return postingUtils.changeToPostingVoAPI(postings);

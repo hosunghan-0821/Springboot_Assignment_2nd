@@ -2,13 +2,11 @@ package com.sparta.myblog.utils;
 
 import com.sparta.myblog.models.Posting;
 import com.sparta.myblog.models.PostingRequestDto;
-import com.sparta.myblog.models.PostingVo;
+import com.sparta.myblog.models.PostingResponseDto;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,24 +21,24 @@ public class PostingUtils {
     }
 
     //Posting to PostingVO
-    public List<PostingVo> changeToPostingVo(List<Posting> postings) {
-        List<PostingVo> postingVoList = new ArrayList<>();
+    public List<PostingResponseDto> changeToPostingVo(List<Posting> postings) {
+        List<PostingResponseDto> postingVoList = new ArrayList<>();
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         for (Posting posting : postings) {
-            PostingVo postingVo = new PostingVo(posting,date);
-            postingVoList.add(postingVo);
+            PostingResponseDto postingResponseDto = new PostingResponseDto(posting,date);
+            postingVoList.add(postingResponseDto);
         }
 
         return postingVoList;
     }
 
-    public List<PostingVo> changeToPostingVoAPI(List<Posting> postings){
-        List<PostingVo> postingVoList = new ArrayList<>();
+    public List<PostingResponseDto> changeToPostingVoAPI(List<Posting> postings){
+        List<PostingResponseDto> postingResponseDtoList = new ArrayList<>();
         for(Posting posting: postings){
-            PostingVo postingVo= new PostingVo(posting);
-            postingVoList.add(postingVo);
+            PostingResponseDto postingResponseDto = new PostingResponseDto(posting);
+            postingResponseDtoList.add(postingResponseDto);
         }
-        return postingVoList;
+        return postingResponseDtoList;
     }
 
 

@@ -5,13 +5,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @RequiredArgsConstructor
 @Component
-public class PostingVo {
+public class PostingResponseDto {
     private String title;
     private String contents;
     private String writer;
@@ -20,7 +18,7 @@ public class PostingVo {
     private String createdAt;
 
     //posting to PostingVo
-    public PostingVo(Posting posting ,String date){
+    public PostingResponseDto(Posting posting , String date){
 
         this.title= posting.getTitle();
         this.contents=posting.getContents();
@@ -43,7 +41,7 @@ public class PostingVo {
         }
 
     }
-    public PostingVo(Posting posting){
+    public PostingResponseDto(Posting posting){
         this.title = posting.getTitle();
         this.writer = posting.getWriter();
         this.createdAt= posting.getCreatedAt();
