@@ -1,4 +1,4 @@
-package com.sparta.myblog.models;
+package com.sparta.myblog.Dto;
 
 import lombok.Getter;
 import lombok.Setter;

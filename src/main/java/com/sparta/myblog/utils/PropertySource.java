@@ -1,11 +1,29 @@
 package com.sparta.myblog.utils;
 
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
-@Configuration
-@PropertySource(value ="config.properties" ,ignoreResourceNotFound = true)
+//@Configuration
+//@org.springframework.context.annotation.PropertySource(value ="application-DB-KEY.properties" ,ignoreResourceNotFound = false)
+@Getter
+@Setter
+@Component
+public class PropertySource {
 
-public class DataResources {
+
+    @Value("${spring.datasource.url}")
+    private String dataSourceUrl;
+
+    @Value("${spring.datasource.username}")
+    private String userName;
+
+    @Value("${spring.datasource.password}")
+    private String password;
+
+
 }

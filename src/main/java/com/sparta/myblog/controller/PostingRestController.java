@@ -2,9 +2,9 @@ package com.sparta.myblog.controller;
 
 
 import com.sparta.myblog.models.Posting;
-import com.sparta.myblog.models.PostingRepository;
-import com.sparta.myblog.models.PostingRequestDto;
-import com.sparta.myblog.models.PostingResponseDto;
+import com.sparta.myblog.repository.PostingRepository;
+import com.sparta.myblog.Dto.PostingRequestDto;
+import com.sparta.myblog.Dto.PostingResponseDto;
 import com.sparta.myblog.service.PostingService;
 import com.sparta.myblog.utils.PostingUtils;
 import lombok.RequiredArgsConstructor;

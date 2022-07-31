@@ -1,7 +1,7 @@
 package com.sparta.myblog.controller;
 
 import com.sparta.myblog.models.Posting;
-import com.sparta.myblog.models.PostingRepository;
+import com.sparta.myblog.repository.PostingRepository;
 import com.sparta.myblog.utils.PostingUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,11 +18,14 @@ public class PageController {
     private final PostingRepository postingRepository;
     private final PostingUtils postingUtils;
 
+
+
     @GetMapping("/")
     public String main(Model model){
         List<Posting> postings = postingRepository.findAllByOrderByCreatedAtDesc();
 
         model.addAttribute("postingList", postingUtils.changeToPostingVo(postings));
+
         //PostingVo postingVo = new PostingVo()
         return "index";
     }
@@ -43,6 +46,11 @@ public class PageController {
     public String detailPage(Model model,@RequestParam Long id){
         model.addAttribute("id",id);
         return "postRead";
+    }
+
+    @GetMapping("/api/login")
+    public String loginPage(){
+        return "login";
     }
 
 

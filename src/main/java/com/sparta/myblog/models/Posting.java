@@ -1,8 +1,8 @@
 package com.sparta.myblog.models;
 
+import com.sparta.myblog.Dto.PostingRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 

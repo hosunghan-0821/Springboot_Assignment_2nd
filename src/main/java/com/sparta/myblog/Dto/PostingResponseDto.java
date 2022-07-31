@@ -1,5 +1,6 @@
-package com.sparta.myblog.models;
+package com.sparta.myblog.Dto;
 
+import com.sparta.myblog.models.Posting;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

@@ -1,8 +1,8 @@
 package com.sparta.myblog.utils;
 
 import com.sparta.myblog.models.Posting;
-import com.sparta.myblog.models.PostingRequestDto;
-import com.sparta.myblog.models.PostingResponseDto;
+import com.sparta.myblog.Dto.PostingRequestDto;
+import com.sparta.myblog.Dto.PostingResponseDto;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ public class PostingUtils {
         else return false;
     }
 
-    //Posting to PostingVO
+    //Posting to reponseDto
     public List<PostingResponseDto> changeToPostingVo(List<Posting> postings) {
         List<PostingResponseDto> postingVoList = new ArrayList<>();
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
