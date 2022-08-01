@@ -1,6 +1,17 @@
 let password;
 
 $(document).ready(function (){
+    if ($.cookie('token')) {
+        $.ajaxSetup({
+            headers:{
+                'Authorization': $.cookie('token')
+            }
+        })
+    } else {
+        window.location.href = '/user/loginView';
+    }
+
+
     $.ajax({
         type:'GET',
         url:'/api/blogs/details?id='+id,

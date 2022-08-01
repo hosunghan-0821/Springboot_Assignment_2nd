@@ -4,6 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout}">
 <head>
+
     <link rel="stylesheet" href="/CSS/login.css">
 </head>
 <body>
@@ -19,7 +20,7 @@
 
     <div class="container">
         <div class="row form-signin">
-            <form action="/api/login" method="post" id = "login-form">
+            <form>
                 <div class="form-floating pb-3">
                     <input  autocomplete="off" type="text/plain" class="form-control" id="user_id" name="username"
                             placeholder="name@example.com">
@@ -46,8 +47,34 @@
 <th:block layout:fragment="script">
     <script>
         function login(){
-            let form = $('#login-form');
-            form.submit();
+
+            let user_id=$('#user_id').val();
+            let user_pw=$('#user_pw').val();
+
+            $.ajax({
+                type:"POST",
+                url:"/api/login",
+                contentType: "application/json",
+                data : JSON.stringify({
+                    "username":user_id,
+                    "password":user_pw
+                }),
+                success: function (response,textStatus,request){
+                    const jwtToken = request.getResponseHeader("Authorization");
+                    if(jwtToken){
+                        $.cookie("token",jwtToken);
+                        $.ajaxSetup({
+                            headers:{
+                                'Authorization': $.cookie('token',jwtToken,{path:'/'})
+                            }
+                        })
+                        window.location.href='/';
+                    }
+                    else{
+                        window.location.href='/api/loginView?error';
+                    }
+                }
+            })
         }
     </script>
 </th:block>
