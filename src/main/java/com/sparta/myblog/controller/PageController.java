@@ -24,14 +24,8 @@ public class PageController {
 
 
     @GetMapping("/")
-    public String main(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public String main(Model model){
         List<Posting> postings = postingRepository.findAllByOrderByCreatedAtDesc();
-        try{
-            model.addAttribute("nickname",userDetails.getUser().getNickname());
-        }catch (Exception e){
-
-        }
-
         model.addAttribute("postingList", postingUtils.changeToPostingVo(postings));
         //PostingVo postingVo = new PostingVo()
         return "index";
@@ -53,7 +47,12 @@ public class PageController {
 
     @GetMapping("/posting/details")
     public String detailPage(@AuthenticationPrincipal UserDetailsImpl userDetails,Model model, @RequestParam Long id){
-        model.addAttribute("nickname",userDetails.getUser().getNickname());
+        try{
+            model.addAttribute("nickname",userDetails.getUser().getNickname());
+        }catch (Exception e){
+
+        }
+
         model.addAttribute("id",id);
         return "postRead";
     }

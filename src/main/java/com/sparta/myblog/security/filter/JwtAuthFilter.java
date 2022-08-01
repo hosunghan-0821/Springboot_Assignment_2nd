@@ -44,12 +44,10 @@ public class JwtAuthFilter  extends AbstractAuthenticationProcessingFilter {
             response.sendRedirect("/api/loginView");
             return null;
         }
-
         if(tokenPayload ==null){
             response.sendRedirect("/api/loginView");
             return null;
         }
-        System.out.println(tokenPayload);
         JwtPreProcessingToken jwtToken = new JwtPreProcessingToken(extractor.extract(tokenPayload,request));
 
         return super

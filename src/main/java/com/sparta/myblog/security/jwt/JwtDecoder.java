@@ -18,14 +18,10 @@ public class JwtDecoder {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     public String decodeUsername(String token){
-        System.out.println("decodeUsername() : "+token );
         DecodedJWT decodedJWT = isValidToken(token).orElseThrow(()->new IllegalArgumentException("유효한 토큰이 아닙니다."));
-
         Date expiredDate = decodedJWT.getClaim(CLAIM_EXPIRED_DATE).asDate();
-        System.out.println("expiredDate : "+expiredDate);
 
         Date now = new Date();
-        System.out.println("nowDate : "+now);
         if(expiredDate.before(now)){
             throw new IllegalArgumentException("유효한 토큰이 아닙니다");
         }

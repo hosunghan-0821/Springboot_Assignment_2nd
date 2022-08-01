@@ -65,17 +65,6 @@ public class WebSecurityConfig {
                 .anyRequest()
                 .permitAll()
                 .and()
-//                //로그인 기능
-//                .formLogin()
-//                //로그인 view 제공 (GET /api/login)
-//                .loginPage("/api/login")
-//                //로그인 처리 (POST /api/login)
-//                .loginProcessingUrl("/api/login")
-//                //로그인  처리후 성공시 URL
-//                .defaultSuccessUrl("/")
-//                .failureUrl("/api/login?error")
-//                .permitAll()
-//            .and()
                 //로그아웃 기능 허용
                 .logout()
                 .logoutUrl("/api/logout")
@@ -113,8 +102,10 @@ public class WebSecurityConfig {
         // 회원 관리 API 적용
         skipPathList.add("GET,/api/**");
         skipPathList.add("POST,/api/signup");
-        skipPathList.add("POST,/api/userinfo");
 
+        // 글보기
+        skipPathList.add("GET,/api/blogs/details/**");
+        skipPathList.add("GET,/posting/details/**");
         //기본 페이지 설정
         skipPathList.add("GET,/");
         skipPathList.add("GET,/favicon.ico");

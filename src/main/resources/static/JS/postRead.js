@@ -7,8 +7,6 @@ $(document).ready(function (){
                 'Authorization': $.cookie('token')
             }
         })
-    } else {
-        window.location.href = '/user/loginView';
     }
 
 

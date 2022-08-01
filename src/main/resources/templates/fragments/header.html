@@ -16,7 +16,12 @@
 
             <li th:if="!${nickname}" class="nav-item"><a id="login" href="/api/loginView" class="nav-link">로그인</a></li>
 
-            <li th:if="${nickname}" class="nav-item"><a id="logout" href="/api/logout" class="nav-link">로그아웃</a></li>
+            <li th:if="${nickname}" class="nav-item">
+<!--                <form id="my_form" method="post" action="/api/logout">-->
+<!--                    <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">로그아웃</a>-->
+<!--                </form>-->
+                <a id="logout" href="/api/logout" class="nav-link">로그아웃</a>
+            </li>
         </ul>
     </div>
 </header>
