@@ -1,9 +1,12 @@
 package com.sparta.myblog.controller;
 
 import com.sparta.myblog.models.Posting;
+import com.sparta.myblog.models.UserInfo;
 import com.sparta.myblog.repository.PostingRepository;
+import com.sparta.myblog.security.UserDetailsImpl;
 import com.sparta.myblog.utils.PostingUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,38 +24,38 @@ public class PageController {
 
 
     @GetMapping("/")
-    public String main(Model model){
+    public String main(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails){
         List<Posting> postings = postingRepository.findAllByOrderByCreatedAtDesc();
+        try{
+            model.addAttribute("nickname",userDetails.getUser().getNickname());
+        }catch (Exception e){
+
+        }
 
         model.addAttribute("postingList", postingUtils.changeToPostingVo(postings));
-
         //PostingVo postingVo = new PostingVo()
         return "index";
     }
 
     @GetMapping("/posting")
-    public String writePage(Model model){
+    public String writePage(@AuthenticationPrincipal UserDetailsImpl userDetails ,Model model){
+        model.addAttribute("nickname",userDetails.getUser().getNickname());
         model.addAttribute("posting","");
         return "write";
     }
     @GetMapping("/posting/modified")
-    public String updatePage(Model model, @RequestParam Long id){
+    public String updatePage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model, @RequestParam Long id){
         Posting posting = postingRepository.findById(id).orElseThrow(()->new NullPointerException("해당 아이디가 없습니다"));
+        model.addAttribute("nickname",userDetails.getUser().getNickname());
         model.addAttribute("posting",posting);
         return "write";
     }
 
     @GetMapping("/posting/details")
-    public String detailPage(Model model,@RequestParam Long id){
+    public String detailPage(@AuthenticationPrincipal UserDetailsImpl userDetails,Model model, @RequestParam Long id){
+        model.addAttribute("nickname",userDetails.getUser().getNickname());
         model.addAttribute("id",id);
         return "postRead";
     }
-
-    @GetMapping("/api/login")
-    public String loginPage(){
-        return "login";
-    }
-
-
 
 }

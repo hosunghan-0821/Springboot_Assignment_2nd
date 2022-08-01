@@ -6,8 +6,7 @@ build/
 !**/src/test/**/build/
 
 application.properties
-config.properties
-
+application-DB-KEY.properties
 
 ### STS ###
 .apt_generated

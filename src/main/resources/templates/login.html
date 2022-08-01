@@ -19,14 +19,14 @@
 
     <div class="container">
         <div class="row form-signin">
-            <form>
+            <form action="/api/login" method="post" id = "login-form">
                 <div class="form-floating pb-3">
-                    <input  autocomplete="off" type="text/plain" class="form-control" id="user_id"
+                    <input  autocomplete="off" type="text/plain" class="form-control" id="user_id" name="username"
                             placeholder="name@example.com">
                     <label for="user_id">ID</label>
                 </div>
                 <div class="form-floating">
-                    <input  autocomplete="off" type="password" class="form-control" id="user_pw"
+                    <input  autocomplete="off" type="password" class="form-control" id="user_pw" name="password"
                             placeholder="Password">
                     <label for="user_pw">Password</label>
                 </div>
@@ -37,12 +37,19 @@
         <div class="row form-signin">
             <span style="display: flex;flex-direction: row ;justify-content: flex-end; ">
 <!--                  <button  style="margin-right: 5px" type="button" class="btn btn-outline-primary"></button>-->
-                 <button type="button" class="btn btn-outline-primary" onclick="signup()">SignUp</button>
+                 <button type="button" class="btn btn-outline-primary" onclick="location.href='/api/signup'" >SignUp</button>
             </span>
         </div>
     </div>
 
-
 </main>
+<th:block layout:fragment="script">
+    <script>
+        function login(){
+            let form = $('#login-form');
+            form.submit();
+        }
+    </script>
+</th:block>
 </body>
 </html>
