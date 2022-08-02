@@ -100,12 +100,17 @@ public class WebSecurityConfig {
         skipPathList.add("GET,/JS/**");
 
         // 회원 관리 API 적용
-        skipPathList.add("GET,/api/**");
+        skipPathList.add("GET,/api/loginView");
         skipPathList.add("POST,/api/signup");
 
-        // 글보기
+
+        // 글보기 게시글 관련
+        skipPathList.add("GET,/api/blogs");
         skipPathList.add("GET,/api/blogs/details/**");
         skipPathList.add("GET,/posting/details/**");
+
+        //댓글 기본 보기
+        skipPathList.add("GET,/api/comment/**");
         //기본 페이지 설정
         skipPathList.add("GET,/");
         skipPathList.add("GET,/favicon.ico");

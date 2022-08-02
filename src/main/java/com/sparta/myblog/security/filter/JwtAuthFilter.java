@@ -36,18 +36,14 @@ public class JwtAuthFilter  extends AbstractAuthenticationProcessingFilter {
 
         System.out.println("attemptAutentication () 실행 ");
 
-        //String tokenPayload = request.getHeader("Authorization");
-        String tokenPayload = null;
-        try{
-            tokenPayload = WebUtils.getCookie( request, "token").getValue();
-        }catch (Exception e){
+        // JWT 값을 담아주는 변수 TokenPayload
+        String tokenPayload = request.getHeader("Authorization");
+        System.out.println(tokenPayload);
+        if (tokenPayload == null) {
             response.sendRedirect("/api/loginView");
             return null;
         }
-        if(tokenPayload ==null){
-            response.sendRedirect("/api/loginView");
-            return null;
-        }
+
         JwtPreProcessingToken jwtToken = new JwtPreProcessingToken(extractor.extract(tokenPayload,request));
 
         return super

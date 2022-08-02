@@ -28,7 +28,7 @@ public class HeaderTokenExtractor {
             throw new NoSuchElementException("올바른 JWT 정보가 아닙니다.");
         }
 
-        return header.substring(HEADER_PREFIX.length()+2);
+        return header.substring(HEADER_PREFIX.length());
 
 
     }
