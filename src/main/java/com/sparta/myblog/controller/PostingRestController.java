@@ -5,9 +5,11 @@ import com.sparta.myblog.models.Posting;
 import com.sparta.myblog.repository.PostingRepository;
 import com.sparta.myblog.Dto.PostingRequestDto;
 import com.sparta.myblog.Dto.PostingResponseDto;
+import com.sparta.myblog.security.UserDetailsImpl;
 import com.sparta.myblog.service.PostingService;
 import com.sparta.myblog.utils.PostingUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,23 +44,16 @@ public class PostingRestController {
 
     //게시글 업데이트
     @PutMapping("/api/blogs/{id}")
-    public boolean updatePosting(@PathVariable Long id , @RequestBody PostingRequestDto requestDto){
+    public boolean updatePosting(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id , @RequestBody PostingRequestDto requestDto){
 
-        return postingService.updatePosting(id,requestDto);
+        return postingService.updatePosting(id,requestDto,userDetails);
     }
 
     //게시글 삭제하기
     @DeleteMapping("/api/blogs/{id}")
-    public boolean deletePosting(@PathVariable Long id ,@RequestBody PostingRequestDto requestDto){
+    public boolean deletePosting(@PathVariable Long id ,@AuthenticationPrincipal UserDetailsImpl userDetails){
 
-        Posting posting =  postingRepository.findById(id).orElseThrow(()->new NullPointerException("해당하는 아이디가 없습니다"));
-        if(postingUtils.checkPassword(posting,requestDto)){
-            postingRepository.deleteById(id);
-            return true;
-        }
-        else{
-            return false;
-        }
+        return postingService.deletePosting(id,userDetails);
     }
 
     //게시글 비밀번호 확인하기

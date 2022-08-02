@@ -32,9 +32,9 @@ public class UserService {
             throw new IllegalArgumentException("회원가입 정보가 정확하지 않습니다.");
         };
         //회원 닉네임 중복 확인
-        Optional<UserInfo> found = userRepository.findByNickname(requestDto.getUserNickname());
+        Optional<UserInfo> found = userRepository.findByUsername(requestDto.getUserId());
         if(found.isPresent()){
-            throw new IllegalArgumentException("중복된 사용자 Nickname이 존재합니다.");
+            throw new IllegalArgumentException("중복된 사용자 id가 존재합니다.");
         }
         requestDto.setUserPassword(passwordEncoder.encode(requestDto.getUserPassword())) ;
         UserInfo userInfo = new UserInfo(requestDto);
@@ -51,7 +51,7 @@ public class UserService {
 
         boolean checkValueCondition = true;
         String pattern = "^[a-zA-Z0-9]*$";
-        if( !(Pattern.matches(pattern,nickname) && nickname.length()>=4 && nickname.length()<=12) ){
+        if( !(Pattern.matches(pattern,Id) && Id.length()>=4 && Id.length()<=12) ){
             System.out.println("닉네임 문제");
             checkValueCondition=false;
         }

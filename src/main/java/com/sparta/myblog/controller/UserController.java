@@ -31,7 +31,7 @@ public class UserController {
 
     @PostMapping("/api/signup")
     @ResponseBody
-    public SignupRequestDto registerUser(@ModelAttribute SignupRequestDto signupRequestDto){
+    public SignupRequestDto registerUser(@RequestBody SignupRequestDto signupRequestDto){
         System.out.println(signupRequestDto.getUserId()+"\n"+signupRequestDto.getUserNickname());
         userService.registerUser(signupRequestDto);
         return signupRequestDto;

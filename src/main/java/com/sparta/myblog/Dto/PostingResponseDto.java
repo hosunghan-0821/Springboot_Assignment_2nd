@@ -43,6 +43,7 @@ public class PostingResponseDto {
 
     }
     public PostingResponseDto(Posting posting){
+        this.contents=posting.getContents();
         this.title = posting.getTitle();
         this.writer = posting.getWriter();
         this.createdAt= posting.getCreatedAt();

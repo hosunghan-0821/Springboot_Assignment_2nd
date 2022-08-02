@@ -1,7 +1,6 @@
 package com.sparta.myblog.controller;
 
 import com.sparta.myblog.models.Posting;
-import com.sparta.myblog.models.UserInfo;
 import com.sparta.myblog.repository.PostingRepository;
 import com.sparta.myblog.security.UserDetailsImpl;
 import com.sparta.myblog.utils.PostingUtils;
