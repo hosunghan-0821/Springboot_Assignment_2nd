@@ -17,10 +17,16 @@ public class CommentResponseDto {
 
     public CommentResponseDto(Comment comment){
         this.success=true;
+        comment.setUserInfo(null);
+        comment.setPosting(null);
         this.data = comment;
     }
     public CommentResponseDto(List<Comment> comments){
         this.success=true;
+        for(int i = 0 ; i <comments.size();i++){
+            comments.get(i).setPosting(null);
+            comments.get(i).setUserInfo(null);
+        }
         this.data = comments;
     }
     public CommentResponseDto(boolean delete){

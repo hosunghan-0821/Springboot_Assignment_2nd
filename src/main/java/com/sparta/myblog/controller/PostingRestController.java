@@ -31,29 +31,34 @@ public class PostingRestController {
     }
     //게시글 상세 조회
     @GetMapping("/api/blogs/details")
-    public Posting readPosting(@RequestParam Long id){
-        return postingRepository.findById(id).orElseThrow(()->new NullPointerException("해당 아이디가 없습니다"));
+    public PostingResponseDto readPosting(@RequestParam Long id){
+        Posting posting = postingService.readPosting(id);
+        return new PostingResponseDto(posting);
     }
 
     //게시글 작성
+    //TO-DO 게시글 작성 변경하기
     @PostMapping("/api/blogs")
-    public Posting writePosting(@RequestBody PostingRequestDto requestDto){
-        Posting posting = new Posting(requestDto);
-        return postingRepository.save(posting);
+    public PostingResponseDto writePosting(@AuthenticationPrincipal UserDetailsImpl userDetails,@RequestBody PostingRequestDto requestDto){
+        Posting posting = postingService.writePosting(userDetails, requestDto);
+
+        return new PostingResponseDto(posting);
     }
 
     //게시글 업데이트
     @PutMapping("/api/blogs/{id}")
-    public boolean updatePosting(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id , @RequestBody PostingRequestDto requestDto){
+    public PostingResponseDto updatePosting(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id , @RequestBody PostingRequestDto requestDto){
 
-        return postingService.updatePosting(id,requestDto,userDetails);
+        Posting posting = postingService.updatePosting(id,requestDto,userDetails);
+        return new PostingResponseDto(posting);
     }
 
     //게시글 삭제하기
     @DeleteMapping("/api/blogs/{id}")
-    public boolean deletePosting(@PathVariable Long id ,@AuthenticationPrincipal UserDetailsImpl userDetails){
+    public PostingResponseDto deletePosting(@PathVariable Long id ,@AuthenticationPrincipal UserDetailsImpl userDetails){
 
-        return postingService.deletePosting(id,userDetails);
+        boolean isDelete = postingService.deletePosting(id,userDetails);
+        return new PostingResponseDto(isDelete);
     }
 
     //게시글 비밀번호 확인하기

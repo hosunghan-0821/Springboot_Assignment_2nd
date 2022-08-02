@@ -1,10 +1,14 @@
 package com.sparta.myblog.Dto;
 
+import com.sparta.myblog.models.Comment;
 import com.sparta.myblog.models.Posting;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,9 +22,13 @@ public class PostingResponseDto {
     private Long id;
     private String createdAt;
 
+    private boolean success;
+    private String error;
+    private List<Comment> commentList;
     //posting to PostingVo
     public PostingResponseDto(Posting posting , String date){
 
+        success=true;
         this.title= posting.getTitle();
         this.contents=posting.getContents();
         this.writer= posting.getWriter();
@@ -42,7 +50,24 @@ public class PostingResponseDto {
         }
 
     }
+    public PostingResponseDto (boolean isDelete){
+        success = isDelete;
+
+    }
     public PostingResponseDto(Posting posting){
+        success=true;
+        this.commentList=new ArrayList<>();
+
+        try{
+            for(Comment comment : posting.getComment()){
+                comment.setPosting(null);
+                comment.setUserInfo(null);
+                commentList.add(comment);
+            }
+        }catch (Exception e){
+
+        }
+        this.id= posting.getId();
         this.contents=posting.getContents();
         this.title = posting.getTitle();
         this.writer = posting.getWriter();
