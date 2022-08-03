@@ -39,6 +39,7 @@ public class FormLoginFilter extends UsernamePasswordAuthenticationFilter {
         }catch (Exception e){
             throw new RuntimeException("username , password 입력이 필요합니다.(JSON)");
         }
+
         setDetails(request,authRequest);
         return this.getAuthenticationManager().authenticate(authRequest);
     }
