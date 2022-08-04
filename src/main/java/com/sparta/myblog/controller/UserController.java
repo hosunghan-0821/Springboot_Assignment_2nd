@@ -1,9 +1,12 @@
 package com.sparta.myblog.controller;
 
 import com.sparta.myblog.Dto.SignupRequestDto;
+import com.sparta.myblog.Dto.TokenDto;
+import com.sparta.myblog.Dto.TokenRequestDto;
 import com.sparta.myblog.Dto.UserInfoDto;
 import com.sparta.myblog.security.UserDetailsImpl;
 import com.sparta.myblog.service.UserService;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -46,8 +49,13 @@ public class UserController {
             return new UserInfoDto(username);
         }
         return new UserInfoDto();
+    }
+    //access_token 재발급
+    @PostMapping("/api/reissue")
+    @ResponseBody
+    public TokenDto refreshToken(@RequestBody TokenRequestDto tokenRequestDto){
 
-
+        return userService.reissue(tokenRequestDto);
 
     }
 

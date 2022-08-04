@@ -20,6 +20,8 @@ public final class JwtTokenUtils {
 
     private static final int JWT_TOKEN_VALID_MILLI_SEC = JWT_TOKEN_VALID_SEC * 1000;
 
+    private static final int JWT_REFRESH_TOKEN_VALID_MILLI_SEC = 7*DAY*1000;
+
     public static final String CLAIM_EXPIRED_DATE = "EXPIRED_DATE";
     public static final String CLAIM_USER_NAME = "USER_NAME";
     public static final String JWT_SECRET = "jwt_secret_!@#$%";
@@ -38,6 +40,20 @@ public final class JwtTokenUtils {
         }
 
         return token;
+    }
+
+    public static String generateJwtRefreshToken(){
+        String refreshToken = null;
+
+        try{
+            refreshToken=JWT.create()
+                    .withClaim(CLAIM_EXPIRED_DATE,new Date(System.currentTimeMillis()+ JWT_REFRESH_TOKEN_VALID_MILLI_SEC))
+                    .sign(generateAlgorithm());
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return refreshToken;
     }
 
     private static Algorithm generateAlgorithm(){

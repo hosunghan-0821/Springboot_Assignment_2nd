@@ -1,5 +1,7 @@
 package com.sparta.myblog.security.filter;
 
+import com.sparta.myblog.Dto.UserInfoDto;
+import com.sparta.myblog.models.UserInfo;
 import com.sparta.myblog.security.jwt.HeaderTokenExtractor;
 import com.sparta.myblog.security.jwt.JwtPreProcessingToken;
 import org.springframework.security.core.Authentication;
@@ -34,17 +36,21 @@ public class JwtAuthFilter  extends AbstractAuthenticationProcessingFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
 
+        System.out.println(1);
         System.out.println("attemptAutentication () 실행 ");
+
 
         // JWT 값을 담아주는 변수 TokenPayload
         String tokenPayload = request.getHeader("Authorization");
-        System.out.println(tokenPayload);
+        String refreshToken = request.getHeader("Refresh");
+        System.out.println("refresh token : " + refreshToken);
+        System.out.println("access token  : " + tokenPayload);
         if (tokenPayload == null) {
             response.sendRedirect("/api/loginView");
             return null;
         }
 
-        JwtPreProcessingToken jwtToken = new JwtPreProcessingToken(extractor.extract(tokenPayload,request));
+        JwtPreProcessingToken jwtToken = new JwtPreProcessingToken(extractor.extract(tokenPayload));
 
         return super
                 .getAuthenticationManager()
@@ -57,6 +63,7 @@ public class JwtAuthFilter  extends AbstractAuthenticationProcessingFilter {
          *  SecurityContext 사용자 Token 저장소를 생성합니다.
          *  SecurityContext 에 사용자의 인증된 Token 값을 저장합니다.
          */
+        System.out.println(3);
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(authResult);
         SecurityContextHolder.setContext(context);
@@ -74,6 +81,7 @@ public class JwtAuthFilter  extends AbstractAuthenticationProcessingFilter {
          *	인증이 성공하지 못한 단계 이기 때문에 잘못된 Token값을 제거합니다.
          *	모든 인증받은 Context 값이 삭제 됩니다.
          */
+        System.out.println("실패 3");
         SecurityContextHolder.clearContext();
         super.unsuccessfulAuthentication(request,response,failed);
     }

@@ -28,10 +28,12 @@ public class JWTAuthProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String token = (String) authentication.getPrincipal();
-        System.out.println(token);
-        String username = jwtDecoder.decodeUsername(token);
 
+        System.out.println("JWT 인증 확인 2");
+        String token = (String) authentication.getPrincipal();
+        int tokenLength = (Integer) authentication.getCredentials();
+        System.out.println(token+"\n"+tokenLength);
+        String username = jwtDecoder.decodeUsername(token);
 
         // TODO: API 사용시마다 매번 User DB 조회 필요
         //  -> 해결을 위해서는 UserDetailsImpl 에 User 객체를 저장하지 않도록 수정

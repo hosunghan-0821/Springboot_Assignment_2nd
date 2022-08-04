@@ -1,11 +1,13 @@
 package com.sparta.myblog.security;
 
 
+import com.sparta.myblog.repository.RefreshTokenRepository;
 import com.sparta.myblog.security.filter.FormLoginFilter;
 import com.sparta.myblog.security.filter.JwtAuthFilter;
 import com.sparta.myblog.security.jwt.HeaderTokenExtractor;
 import com.sparta.myblog.security.provider.FormLoginAuthProvider;
 import com.sparta.myblog.security.provider.JWTAuthProvider;
+import com.sparta.myblog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +37,7 @@ public class WebSecurityConfig {
     private final JWTAuthProvider jwtAuthProvider;
     private final AuthenticationConfiguration authenticationConfiguration;
     private final HeaderTokenExtractor headerTokenExtractor;
+    private final FormLoginSuccessHandler formLoginSuccessHandler;
 
 
     @Bean
@@ -84,7 +87,7 @@ public class WebSecurityConfig {
     public FormLoginFilter formLoginFilter() throws Exception {
         FormLoginFilter formLoginFilter = new FormLoginFilter(authenticationManager(authenticationConfiguration));
         formLoginFilter.setFilterProcessesUrl("/api/login");
-        formLoginFilter.setAuthenticationSuccessHandler(formLoginSuccessHandler());
+        formLoginFilter.setAuthenticationSuccessHandler(formLoginSuccessHandler);
         formLoginFilter.afterPropertiesSet();
 //        System.out.println(authenticationManager(authenticationConfiguration));
         return formLoginFilter;
@@ -102,7 +105,7 @@ public class WebSecurityConfig {
         // 회원 관리 API 적용
         skipPathList.add("GET,/api/loginView");
         skipPathList.add("POST,/api/signup");
-
+        skipPathList.add("POST,/api/reissue");
 
         // 글보기 게시글 관련
         skipPathList.add("GET,/api/blogs");
@@ -119,11 +122,6 @@ public class WebSecurityConfig {
         JwtAuthFilter filter = new JwtAuthFilter(headerTokenExtractor, matcher);
         filter.setAuthenticationManager(authenticationManager(authenticationConfiguration));
         return filter;
-    }
-
-    @Bean
-    public FormLoginSuccessHandler formLoginSuccessHandler() {
-        return new FormLoginSuccessHandler();
     }
 
     @Bean
